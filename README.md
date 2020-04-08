@@ -31,6 +31,6 @@ https://machinelearningmastery.com/how-to-perform-object-detection-with-yolov3-i
 
 it took 7.469701290130615 seconds.
 
-Current shape is 2vCPUs 4gb, 80gb, 4 TB / $20/month - With this shape it takes about 7.5 s. I will certainly have to reshape to a lot.
+Current shape is 2vCPUs 4gb, 80gb, 4 TB / $20/month - With this shape it takes about 7.5 s. I will certainly have to reshape to a much bigger shape.
 
-Too slow on CPU but GPU are too expensive so it would still be better to have a big CPU shape depending on how many customers.
+Too slow on CPU but GPU are too expensive so it would still be better to have a big CPU shape depending on how many customers the company has.
