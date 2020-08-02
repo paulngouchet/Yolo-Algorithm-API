@@ -102,6 +102,7 @@ def do_nms(boxes, nms_thresh):
 		nb_class = len(boxes[0].classes)
 	else:
 		return
+	
 	for c in range(nb_class):
 		sorted_indices = np.argsort([-box.classes[c] for box in boxes])
 		for i in range(len(sorted_indices)):
@@ -148,18 +149,13 @@ def draw_boxes(filename, v_boxes, v_labels, v_scores):
 	# load the image
 	img = cv2.imread(filename)
 	# plot each box
-
 	for i in range(len(v_boxes)):
 		box = v_boxes[i]
 		# get coordinates
 		y1, x1, y2, x2 = box.ymin, box.xmin, box.ymax, box.xmax
-
 		# coordinates top-left(x1,y1), top-right x2,y1, , bottom-left x1,y2, bottom-rightx2,y2
-
 		cv2.rectangle(img,(x1,y1),(x2,y2),(0,0,255),10)
-
 		font = cv2.FONT_HERSHEY_SIMPLEX
-
 		cv2.putText(img,v_labels[i],(x1,y1), font, 2,(0,0,255),2,cv2.LINE_AA)
 
 	return img
@@ -173,7 +169,6 @@ def predict_yolo(photo_filename, model):
 	# load and prepare image
 	image, image_w, image_h = load_image_pixels(photo_filename, (input_w, input_h))
 	# make prediction
-
 	yhat = model.predict(image)
 	# summarize the shape of the list of arrays
 	#print([a.shape for a in yhat])
@@ -182,9 +177,11 @@ def predict_yolo(photo_filename, model):
 	# define the probability threshold for detected objects
 	class_threshold = 0.6
 	boxes = list()
+	
 	for i in range(len(yhat)):
 		# decode the output of the network
 		boxes += decode_netout(yhat[i][0], anchors[i], class_threshold, input_h, input_w)
+		
 	# correct the sizes of the bounding boxes for the shape of the image
 	correct_yolo_boxes(boxes, image_h, image_w, input_h, input_w)
 	# suppress non-maximal boxes
@@ -204,6 +201,7 @@ def predict_yolo(photo_filename, model):
 	v_boxes, v_labels, v_scores = get_boxes(boxes, labels, class_threshold)
 	# summarize what we found
 	final_output = []
+	
 	for i in range(len(v_boxes)):
 		box = v_boxes[i]
 		y1, x1, y2, x2 = box.ymin, box.xmin, box.ymax, box.xmax
@@ -211,13 +209,9 @@ def predict_yolo(photo_filename, model):
 		#print(v_labels[i], v_scores[i])
 		output = {"coordinates":coordinates, "label":v_labels[i], "confidence":float(v_scores[i])}
 		final_output.append(output)
-
-
 	# draw what we found
 	processed_image = draw_boxes(photo_filename, v_boxes, v_labels, v_scores)
-
 	return processed_image, final_output
-
 
 # load yolov3 model
 model = load_model('model.h5')
