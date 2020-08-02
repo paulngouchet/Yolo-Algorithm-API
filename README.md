@@ -1,7 +1,6 @@
 # Yolo-Algorithm-API
 Real Time Object Detection based on the state of the art Computer Vision Algorithm YOLO - You only Look Once. YOLO is packaged into an API
 
-
 You need to download the Weights yolov3.weights using the Machine Learning Mastery Website
 
 Then you need to run the code create_keras_model.py - to create Keras model based on the downloaded yolov3 weights
